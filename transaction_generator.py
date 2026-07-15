@@ -58,10 +58,7 @@ class TransactionGenerator:
                 500000
             ),
 
-            "health": random.uniform(
-                0.55,
-                0.95
-            ),
+            "health":max(0.15,min(0.95,random.gauss(0.65,0.18))),
 
             "last_transaction": None,
 
@@ -407,22 +404,40 @@ class TransactionGenerator:
 
             "monthly_income": borrower["monthly_income"],
 
-            "loan_amount": borrower["loan_amount"],
+            "loan_amount": borrower.get(
+                "loan_amount",
+                0
+            ),
 
             "loan_term_months":
-                borrower["loan_term_months"],
+                borrower.get(
+                    "loan_term_months",
+                    12
+                ),
 
             "interest_rate":
-                borrower["interest_rate"],
+                borrower.get(
+                    "interest_rate",
+                    0.18
+                ),
 
             "loan_cycle":
-                borrower["loan_cycle"],
+                borrower.get(
+                    "loan_cycle",
+                    0
+                ),
 
             "sacco_member":
-                borrower["sacco_member"],
+                borrower.get(
+                    "sacco_member",
+                    0
+                ),
 
             "risk_profile":
-                borrower["risk_profile"],
+                borrower.get(
+                    "risk_profile",
+                    "Low"
+                ),
 
             "network":
                 self.choose_network(
@@ -465,8 +480,7 @@ class TransactionGenerator:
                     3
                 ),
 
-            "default_label":
-                1 if state["health"] < 0.35 else 0
+            "default_label":int(random.random() < self.risk.default_probability(borrower, state))
 
         }
 
@@ -589,7 +603,7 @@ class TransactionGenerator:
     def export_csv(
             self,
             dataframe,
-            filename="uganda_mobile_money_master.csv"):
+            filename="uganda_mobile_money_master_3000.csv"):
 
         dataframe.to_csv(
             filename,
@@ -607,7 +621,7 @@ class TransactionGenerator:
     def export_excel(
             self,
             dataframe,
-            filename="uganda_mobile_money_master.xlsx"):
+            filename="uganda_mobile_money_master_3000.xlsx"):
 
         dataframe.to_excel(
             filename,

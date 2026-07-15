@@ -5,8 +5,11 @@ Global configuration for the synthetic mobile money data generator.
 RANDOM_SEED = 42
 
 # Population
-#NUM_BORROWERS = 3000
-NUM_BORROWERS = 10
+NUM_BORROWERS = 3000
+#NUM_BORROWERS = 10
+#NUM_BORROWERS = 100
+#NUM_BORROWERS = 1000
+#NUM_BORROWERS = 5000
 
 # Simulation period
 START_YEAR = 2025

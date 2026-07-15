@@ -26,15 +26,19 @@ class BorrowerGenerator:
 
     def generate_risk_profile(self):
 
-        score = round(random.uniform(0,1),2)
+        return random.choices(
+            [
+                "Low",
+                "Medium",
+                "High"
+            ],
 
-        if score > 0.75:
-            return "Low"
-
-        elif score > 0.45:
-            return "Medium"
-
-        return "High"
+            weights=[
+                0.45,
+                0.35,
+                0.20
+            ]
+        )[0]
 
     def generate_income(self, occupation):
 
@@ -92,6 +96,14 @@ class BorrowerGenerator:
                 occupations,
                 weights=weights
             )[0]
+            
+            income = self.generate_income(
+                occupation
+            )
+
+            loan_amount = int(
+                income *random.uniform(0.5,5.5)
+            )
 
             district=random.choice(DISTRICTS)
 
@@ -113,10 +125,9 @@ class BorrowerGenerator:
 
                 "occupation":occupation,
 
-                "monthly_income":
-                self.generate_income(
-                    occupation
-                ),
+                "monthly_income": income,
+
+                "loan_amount": loan_amount,
 
                 "marital_status":
                 random.choice(
@@ -142,20 +153,6 @@ class BorrowerGenerator:
 
                 "sacco_member":
                 random.choice([0,1]),
-
-                "loan_amount":
-                random.choice(
-                    [
-                        300000,
-                        500000,
-                        800000,
-                        1000000,
-                        1500000,
-                        2000000,
-                        3000000,
-                        5000000
-                    ]
-                ),
 
                 "loan_term_months":
                 random.choice(
